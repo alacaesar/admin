@@ -9,6 +9,7 @@
 ```
 
 `itemprop` can take `single` and `range` options.
+`id` and `aria-describedby` attributes should match.
 
 ### Links
 ```html
