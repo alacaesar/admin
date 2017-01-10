@@ -1,4 +1,4 @@
-## Shop Admin
+## Shop Admin Components
 
 ### Date picker
 ```html
@@ -8,14 +8,13 @@
 </div>
 ```
 
-`itemprop` single, range
+`itemprop` can take `single` and `range` options.
 
-### Internal link
+### Links
 ```html
 <a title="{link-title}" id="{unique-ID}" href="{url}">Link</a>
 ```
-### External link
-Add `target="blank"` for external links
+Add `target="blank"` for external links.
 ```html
 <a title="{link-title}" id="{unique-ID}" href="{url}" target="blank">Link</a>
 ```
