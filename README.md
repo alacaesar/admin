@@ -9,3 +9,15 @@
 ```
 
 `itemprop` single, range
+
+
+### Internal link
+```html
+<a title="{link-title}" id="{unique-ID}" href="{url}">Link</a>
+```
+
+### External link
+Add `target="blank"` for external links
+```html
+<a title="{link-title}" id="{unique-ID}" href="{url}" target="blank">Link</a>
+```
