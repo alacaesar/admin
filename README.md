@@ -18,7 +18,19 @@ Add `target="blank"` for external links.
 ```html
 <a title="{link-title}" id="{unique-ID}" href="{url}" target="blank">Link</a>
 ```
-### Drag and Drop Panels
+### Drag and Drop
+#### Containers
+```html
+<div id='left-defaults' class='container col-xs-12 col-md-7'>
+    ...panels...
+</div>
+<div id='right-defaults' class='container col-xs-12 col-md-5'>
+    ...panels...
+</div>
+```
+`left-defaults` and `right-defaults` ids are what the code is looking for.
+
+#### Panels
 ```html
 <div class="col-md-12">
 	<div class="panel panel-default">
