@@ -20,6 +20,8 @@ var Admin = {
             
         t.activate();
     },
+    
+    // main page tabs manager
     tabs:{
         open: function(obj){
             
@@ -46,13 +48,22 @@ var Admin = {
             }
         },
         close: function(obj){
-            var ID = $( obj ).closest( "li" ).remove().attr( "aria-controls" );
+            var ID = $( obj ).closest( "li" ).remove().attr( "aria-controls" ), t = this;
             $( "#" + ID ).remove();
             
             this.openTabs[ID] = 0;
+            
+            // select another tab on close
+            for ( i in t.openTabs)
+                if( t.openTabs[i] == 1 ) {
+                    $('a[href="#'+i+'"]').click();
+                    break;
+                }
         },
         load: function( url, ID )
         {
+            var t = this;
+            
             $.ajax({
                 type: 'GET',
                 dataType: 'html',
@@ -97,6 +108,7 @@ var Admin = {
                     
                     $("#"+ID).html( html );
                     Admin.activate("#"+ID);
+                    Admin.registerToHistory(ID, url);
                 }
             });
         },
@@ -154,8 +166,25 @@ var Admin = {
             dragula([document.querySelector(_ID+" #left-defaults"), document.querySelector(_ID+" #right-defaults")], {
                 moves: function(el, container, handle){ return handle.classList.contains('handle'); }
             });
+        },
+        // activate data table grid
+        table: function( ID ){
+            var _ID = ID || "";
+            
+            $(_ID+' #example').DataTable( { "ajax": 'data/sample.json'} );
+        }
+    },
+    // register clicked page to browser history
+    registerToHistory: function(page, url) {
+        if (history && history.pushState){
+            var obj = {Page:page, Url:url};
+            history.pushState(obj, obj.Page, obj.Url);
         }
     }
 }
+
+window.addEventListener('popstate', function(event){
+	console.log(event);
+});
 
 Admin.init();
