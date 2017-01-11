@@ -14,25 +14,11 @@ var Admin = {
                 stop: function() { mainTabs.tabs( "refresh" ); }
             });
             
-            mainTabs.on( "click", "span.glyphicon-remove", function() {
-                
-                t.tabs.close( this );
-                
-            });
+            mainTabs.on( "click", "span.glyphicon-remove", function(){ t.tabs.close( this ); });
             
             t.definitions.mainTabs = mainTabs;
             
         t.activate();
-        
-        $("a").each(function(){
-            if( $(this).attr("target") != "blank" && $(this).attr("href").indexOf("#") < 0 )
-                $(this).unbind("click").click(function( event ){
-                    event.preventDefault();
-                    
-                    t.tabs.open({url:$(this).attr("href"), title:$(this).attr("title"), ID:$(this).attr("id")});
-                    
-                });
-        });
     },
     tabs:{
         open: function(obj){
@@ -43,7 +29,6 @@ var Admin = {
             
             if (this.openTabs[ID] != 1)
             {
-                
                 var li = $( tabTemplate.replace( /#\{id\}/g, "#"+ID).replace( /#\{title\}/g, obj.title ));
                 $("#main-tabs > ul > li.active").removeClass("active");
                 
@@ -53,10 +38,7 @@ var Admin = {
                 $('a[href="#'+ID+'"]').click();
                 
                 this.openTabs[ID] = 1;
-                
-                this.load("detail.html", ID);
-                
-                //$("#main-tabs #"+obj.ID).load("grid.html");
+                this.load(obj.url, ID);
             }
             else
             {
@@ -111,11 +93,7 @@ var Admin = {
                 },
                 success: function (data) {
                     
-                    //console.log(data);
-                    
-                    var html = $(data).find("#left-defaults");
-                    
-                    //console.log(html);
+                    var html = $(data).find("div.page-content");
                     
                     $("#"+ID).html( html );
                     Admin.activate("#"+ID);
@@ -129,15 +107,27 @@ var Admin = {
             this.actions[i]( ID );
     },
     actions:{
+        // make links with no target="blank" open in a tab rather than a new page
+        links: function( ID ){
+            var _ID = ID || "", t = Admin;
+            
+            $(_ID+" a").each(function(){
+                if( $(this).attr("target") != "blank" && $(this).attr("href").indexOf("#") < 0 )
+                    $(this).unbind("click").click(function( event ){
+                        event.preventDefault();
+                        t.tabs.open({url:$(this).attr("href"), title:$(this).attr("title"), ID:$(this).attr("id")});
+                    });
+            });
+        },
+        // activate tabs inside a page
         tabs: function( ID ){
             var _ID = ID || "";
-            // tabs
             
             var gridtabs = $(_ID+" #tabs").tabs({classes: {"ui-tabs-active": "active"}});
         },
+        // activate date-picker and date ranger picker
         datePicker: function( ID ){
             var _ID = ID || "";
-            // date picker
             
             $(_ID+" .date-picker").each(function(){
                 
@@ -157,9 +147,9 @@ var Admin = {
                 
             });
         },
-        dragAndDrop: function( ID ){
+        // activate drag and drop functionality
+        dragAndDrop: function( ID ){    // drag and drop
             var _ID = ID || "";
-            // drag and drop
             
             dragula([document.querySelector(_ID+" #left-defaults"), document.querySelector(_ID+" #right-defaults")], {
                 moves: function(el, container, handle){ return handle.classList.contains('handle'); }
