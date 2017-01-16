@@ -16,7 +16,28 @@ var Admin = {
             
             mainTabs.on( "click", "span.glyphicon-remove", function(){ t.tabs.close( this ); });
             
+            //mainTabs.on( "tabsactivate", function(event, ui){ console.log(event, ui); } )
+            
             t.definitions.mainTabs = mainTabs;
+            
+            
+            var tcook = t.cookies.check("@alaashopcookies");
+        
+        if (tcook == null) {
+            console.log("null", tcook);
+            
+            if( detectEl("#main-tabs ul li:eq(0) a") )
+            {
+                var a = $("#main-tabs ul li:eq(0) a"),
+                    a_ID = $("#main-tabs ul li:eq(0) a").attr("href").replace("#", "");
+                this.tabs.openTabs[a_ID] = {open:1, url: a.attr("data-url"), title:a.attr("title")};
+                
+            }
+        }
+        else
+        {
+            console.log("not null", tcook);
+        }
             
         t.activate();
     },
@@ -26,20 +47,20 @@ var Admin = {
         open: function(obj){
             
             var tabs = Admin.definitions.mainTabs,
-                tabTemplate = '<li id="tab-#{id}" role="presentation" class="active"><a href="#{id}">#{title}</a><span class="glyphicon glyphicon-remove"></span></li>',
-                ID = "t-"+obj.ID;
+                tabTemplate = '<li id="tab-#{id}" role="presentation" class="active"><a href="#{id}">#{title}<span class="glyphicon glyphicon-remove"></span></a></li>',
+                ID = obj.ID;
             
-            if (this.openTabs[ID] != 1)
+            if (this.openTabs[ID] == null)
             {
                 var li = $( tabTemplate.replace( /#\{id\}/g, "#"+ID).replace( /#\{title\}/g, obj.title ));
                 $("#main-tabs > ul > li.active").removeClass("active");
                 
                 tabs.find(">.ui-tabs-nav").append( li );
-                tabs.append('<div id="'+ID+'">Somethings '+ ID +'</div>');
+                tabs.append('<div id="'+ID+'">Loading '+ ID +'</div>');
                 tabs.tabs("refresh");
                 $('a[href="#'+ID+'"]').click();
                 
-                this.openTabs[ID] = 1;
+                this.openTabs[ID] = {open:1, url: obj.url, title:obj.title};
                 this.load(obj.url, ID);
             }
             else
@@ -51,12 +72,15 @@ var Admin = {
             var ID = $( obj ).closest( "li" ).remove().attr( "aria-controls" ), t = this;
             $( "#" + ID ).remove();
             
-            this.openTabs[ID] = 0;
+            delete this.openTabs[ID];
             
             // select another tab on close
+            console.log(t.openTabs);
+            
             for ( i in t.openTabs)
-                if( t.openTabs[i] == 1 ) {
+                if( t.openTabs[i] != null ) {
                     $('a[href="#'+i+'"]').click();
+                    Admin.registerToHistory(i, t.openTabs[i].url);
                     break;
                 }
         },
@@ -127,7 +151,7 @@ var Admin = {
                 if( $(this).attr("target") != "blank" && $(this).attr("href").indexOf("#") < 0 )
                     $(this).unbind("click").click(function( event ){
                         event.preventDefault();
-                        t.tabs.open({url:$(this).attr("href"), title:$(this).attr("title"), ID:$(this).attr("id")});
+                        t.tabs.open({url:$(this).attr("href"), title:$(this).attr("title"), ID:$(this).attr("data-id")});
                     });
             });
         },
@@ -170,18 +194,60 @@ var Admin = {
         // activate data table grid
         table: function( ID ){
             var _ID = ID || "";
-            
-            $(_ID+' #example').DataTable( { "ajax": 'data/sample.json'} );
+            $(_ID+" .data-table").each(function(){
+                eval("var config = " + $('noscript', this).html());
+                $('table', this).DataTable( config );
+                
+                if( $('noscript', this).attr("dir") != undefined)
+                    eval($('noscript', this).attr("dir"))();
+            });
+        },
+        // multiselect
+        multiselect: function( ID ){
+            var _ID = ID || "";
+            $(_ID+" .multiselect").each(function(){
+                $(this).Multiselect();
+            });
         }
     },
+    
     // register clicked page to browser history
     registerToHistory: function(page, url) {
         if (history && history.pushState){
             var obj = {Page:page, Url:url};
             history.pushState(obj, obj.Page, obj.Url);
         }
+    },
+    
+    // cookies manager
+    cookies: {
+        write: function(key, value, days){
+            var _days = days || 7;
+            var d = new Date();
+                d.setTime(d.getTime() + (_days*24*60*60*1000));
+            document.cookie = key + "=" + value + "; expired=" + d.toGMTString();
+        },
+        check: function(key){
+            var value = "; " + document.cookie,
+                parts = value.split("; " + key + "=");
+            return parts.length == 2 ? parts.pop().split(";").shift() : null;
+        },
+        add: function( k ){
+            var cook = cookie.check("@alaashopcookies");
+            if(cook == null)
+                cookie.write("@alaashopcookies", k, 7);
+            else
+            {
+                var cue = cook.split("|");
+                if( cue[cue.length-1] != k ){
+                    cookie.write("@alaashopcookies", result+"|"+k, 7);
+                }
+            }
+        }
     }
 }
+
+function detectEl( ID ){ return $(ID).length > 0 ? true : false; }
 
 window.addEventListener('popstate', function(event){
 	console.log(event);

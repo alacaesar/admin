@@ -14,11 +14,11 @@ grap your :coffee: and :trollface:
 
 ### Links
 ```html
-<a title="{link-title}" id="{unique-ID}" href="{url}">Link</a>
+<a title="{link-title}" data-id="{unique-ID}" href="{url}">Link</a>
 ```
 Add `target="blank"` for external links.
 ```html
-<a title="{link-title}" id="{unique-ID}" href="{url}" target="blank">Link</a>
+<a title="{link-title}" data-id="{unique-ID}" href="{url}" target="blank">Link</a>
 ```
 ### Drag and Drop
 #### Containers

@@ -29,6 +29,9 @@
 	<link rel="stylesheet" href="dependencies/datatables/datatables.min.css">
 	<script type="text/javascript" src="dependencies/datatables/datatables.min.js"></script>
 	
+	<!-- AA custom plugins -->
+	<script type="text/javascript" src="dependencies/alaa/multiselect.js"></script>
+	
     <title>Shop</title>
 </head>
 <body id="body">
@@ -40,7 +43,7 @@
 		<!-- left panel -->
 		<div class="left-panel col-sm-1">
 			<div class="btn-group-vertical" role="group" aria-label="...">
-				<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-home"></span></button>
+				<button type="button" class="btn btn-default"><a href="index.html" title="Home" data-id="home"><span class="glyphicon glyphicon-home"></span></a></button>
 				<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-folder-close"></span></button>
 				
 				<div class="btn-group" role="group">
@@ -67,75 +70,44 @@
 			<!-- page tabs -->
 			<div id="main-tabs">
 				<ul class="nav nav-tabs">
-					<li role="presentation" class="active"><a href="#detail">Detail <span class="glyphicon glyphicon-remove"></span></a></li>
+					<li role="presentation" class="active"><a data-url="index.html" title="home" href="#home">Home</a></li>
 				</ul>
-				<div class="page-content" id="detail">
+				<div class="page-content" id="home">
+					welcome
+					<br />
+					<a href="detail.html" title="detail" data-id="detail">Open detail page</a>
+					<br />
+					<a href="grid.html" title="grid" data-id="grid">Open grid page</a>
+					<br />
+					<br />
 					
-					<div class='wrapper container-fluid'>
-					  <div id='left-defaults' class='container col-xs-12 col-md-7'>
-						<div class="col-md-12">
-							<div class="panel panel-default">
-								<div class="panel-heading handle">Panel heading without title 1
-									<div class="dropdown pull-right">
-										<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-											<span class="glyphicon glyphicon-option-vertical"></span>
-										</button>
-										<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-											<li><a href="#">Collapse</a></li>
-											<li><a href="#">Hide</a></li>
-										</ul>
+					<!-- multiselect -->
+					<div class="well well-sm multiselect">
+						<button type="button" class="btn-sm btn-info">something</button>
+						<button type="button" class="btn-sm btn-primary"><span class="badge">E</span> something else</button>
+						<button type="button" class="btn-sm btn-default pull-right toggle" data-toggle="modal" data-target="#myModal" data-source="data/sample.json" columns="Category Name|Items Qty">
+							<span class="glyphicon glyphicon-menu-hamburger"></span>
+						</button>
+						<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+									</div>
+									<div class="modal-body">
+										...
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+										<button type="button" class="btn btn-primary">Save changes</button>
 									</div>
 								</div>
-								<div class="panel-body">
-									<p>Select single date and a date range from here</p>
-									<p>Quisque eu urna vel <a title="Grid Link" id="grid001" href="detail.html">grid link</a> enim <a title="Grid Link 2" id="grid002" href="grid.html">grid link 2</a> commodo pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a, lacus. Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra justo vitae neque.</p>
-									<div class="input-group">
-										<span class="input-group-addon" id="basic-addon1">Single date: </span>
-										<input class="form-control date-picker" itemprop="single" value="2016-03-01" aria-describedby="basic-addon1">
-									</div>
-									<br>
-									<div class="input-group">
-										<span class="input-group-addon" id="basic-addon2">Date range: </span>
-										<input class="form-control date-picker" itemprop="range" value="2016-03-01" aria-describedby="basic-addon2">
-									</div>
-									
-								</div>
 							</div>
 						</div>
-						<div class="col-md-12">
-							<div class="panel panel-default">
-								<div class="panel-heading handle">Panel heading without title 2</div>
-								<div class="panel-body">Basic panel example</div>
-							</div>
-						</div>
-						<div class="col-md-12">
-							<div class="panel panel-default">
-								<div class="panel-heading handle">Panel heading without title 3</div>
-								<div class="panel-body">Basic panel example</div>
-							</div>
-						</div>
-						<div class="col-md-12">
-							<div class="panel panel-default">
-								<div class="panel-heading handle">Panel heading without title 4</div>
-								<div class="panel-body">Basic panel example</div>
-							</div>
-						</div>
-					  </div>
-					  <div id='right-defaults' class='container col-xs-12 col-md-5'>
-						<div class="col-md-12">
-							<div class="panel panel-default">
-								<div class="panel-heading handle">Panel heading without title 5</div>
-								<div class="panel-body">Basic panel example</div>
-							</div>
-						</div>
-						<div class="col-md-12">
-							<div class="panel panel-default">
-								<div class="panel-heading handle">Panel heading without title 6</div>
-								<div class="panel-body">Basic panel example</div>
-							</div>
-						</div>
-					  </div>
 					</div>
+					<!-- end of multiselect -->
+					
 					
 				</div>
 				

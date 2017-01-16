@@ -23,3 +23,6 @@
 .preloader.show{ top: 0; }
 .preloader .progress-bar{ width: 0; height: 5px; background: blue; }
 .preloader.done .progress-bar{ width: 100%; transition: width .2s ease-out; }
+
+/* grid table */
+table tbody tr.selected{ background: lightblue !important; }

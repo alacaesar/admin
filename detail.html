@@ -29,6 +29,9 @@
 	<link rel="stylesheet" href="dependencies/datatables/datatables.min.css">
 	<script type="text/javascript" src="dependencies/datatables/datatables.min.js"></script>
 	
+	<!-- AA custom plugins -->
+	<script type="text/javascript" src="dependencies/alaa/multiselect.js"></script>
+	
     <title>Shop</title>
 </head>
 <body id="body">
@@ -40,7 +43,7 @@
 		<!-- left panel -->
 		<div class="left-panel col-sm-1">
 			<div class="btn-group-vertical" role="group" aria-label="...">
-				<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-home"></span></button>
+				<button type="button" class="btn btn-default"><a href="index.html" title="Home" data-id="home"><span class="glyphicon glyphicon-home"></span></a></button>
 				<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-folder-close"></span></button>
 				
 				<div class="btn-group" role="group">
@@ -71,7 +74,101 @@
 				</ul>
 				
 				<div class="page-content" id="detail">
-					details <a title="detail 1" href="index.html" id="details01" >details</a>
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<button type="button" class="btn btn-primary">something else</button>
+							<button type="button" class="btn btn-default pull-right" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+								Screen options <span class="glyphicon glyphicon-th"></span>
+							</button>
+						</div>
+						<div id="collapseExample" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+						<div class="panel-body">
+							
+							<div class="checkbox">
+								<label>
+									<input type="checkbox"> Remember me
+								</label>
+							</div>
+							<div class="checkbox">
+								<label>
+									<input type="checkbox"> Remember me
+								</label>
+							</div>
+							<div class="checkbox">
+								<label>
+									<input type="checkbox"> Remember me
+								</label>
+							</div>
+							
+						</div>
+						</div>
+					</div>
+					<div class='wrapper container-fluid'>
+					  <div id='left-defaults' class='container col-xs-12 col-md-7'>
+						<div class="col-md-12">
+							<div class="panel panel-default">
+								<div class="panel-heading handle">Panel heading without title 1
+									<div class="dropdown pull-right">
+										<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+											<span class="glyphicon glyphicon-option-vertical"></span>
+										</button>
+										<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+											<li><a href="#">Collapse</a></li>
+											<li><a href="#">Hide</a></li>
+										</ul>
+									</div>
+								</div>
+								<div class="panel-body">
+									<p>Select single date and a date range from here</p>
+									<p>Quisque eu urna vel <a title="Grid Link" id="grid001" href="detail.html">grid link</a> enim <a title="Grid Link 2" id="grid002" href="grid.html">grid link 2</a> commodo pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a, lacus. Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra justo vitae neque.</p>
+									<div class="input-group">
+										<span class="input-group-addon" id="basic-addon1">Single date: </span>
+										<input class="form-control date-picker" itemprop="single" value="2016-03-01" aria-describedby="basic-addon1">
+									</div>
+									<br>
+									<div class="input-group">
+										<span class="input-group-addon" id="basic-addon2">Date range: </span>
+										<input class="form-control date-picker" itemprop="range" value="2016-03-01" aria-describedby="basic-addon2">
+									</div>
+									
+								</div>
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="panel panel-default">
+								<div class="panel-heading handle">Panel heading without title 2</div>
+								<div class="panel-body">Basic panel example</div>
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="panel panel-default">
+								<div class="panel-heading handle">Panel heading without title 3</div>
+								<div class="panel-body">Basic panel example</div>
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="panel panel-default">
+								<div class="panel-heading handle">Panel heading without title 4</div>
+								<div class="panel-body">Basic panel example</div>
+							</div>
+						</div>
+					  </div>
+					  <div id='right-defaults' class='container col-xs-12 col-md-5'>
+						<div class="col-md-12">
+							<div class="panel panel-default">
+								<div class="panel-heading handle">Panel heading without title 5</div>
+								<div class="panel-body">Basic panel example</div>
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="panel panel-default">
+								<div class="panel-heading handle">Panel heading without title 6</div>
+								<div class="panel-body">Basic panel example</div>
+							</div>
+						</div>
+					  </div>
+					</div>
+					
 				</div>
 			</div>
 		</div>
