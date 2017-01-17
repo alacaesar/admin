@@ -6,9 +6,18 @@ var Admin = {
         mainTabs: null
     },
     init: function(){
-        var t = this;
+        var t = this,
+            currentID = null,
+            tabsCookies = t.cookies.check("@alaashopcookies");
         
-        var mainTabs = $( "#main-tabs" ).tabs({classes: {"ui-tabs-active": "active"}});
+        // detect main tabs HTML and trigger.
+        if( detectEl("#main-tabs ul li:eq(0) a") )
+        {
+            var a = $("#main-tabs ul li:eq(0) a"),
+                currentID = $("#main-tabs ul li:eq(0) a").attr("href").replace("#", "");
+            this.tabs.openTabs[currentID] = {open:1, url: a.attr("data-url"), ID:currentID, title:a.attr("title")};
+            
+            var mainTabs = $( "#main-tabs" ).tabs({classes: {"ui-tabs-active": "active"}});
             mainTabs.find( ".ui-tabs-nav" ).sortable({
                 axis: "x",
                 stop: function() { mainTabs.tabs( "refresh" ); }
@@ -16,38 +25,30 @@ var Admin = {
             
             mainTabs.on( "click", "span.glyphicon-remove", function(){ t.tabs.close( this ); });
             
-            //mainTabs.on( "tabsactivate", function(event, ui){ console.log(event, ui); } )
-            
             t.definitions.mainTabs = mainTabs;
-            
-            
-            var tcook = t.cookies.check("@alaashopcookies");
+        }
         
-        if (tcook == null) {
-            console.log("null", tcook);
+        // check for tabs cookies to open them
+        if (tabsCookies != null)
+        {    
+            var tabs = JSON.parse( tabsCookies );
             
-            if( detectEl("#main-tabs ul li:eq(0) a") )
-            {
-                var a = $("#main-tabs ul li:eq(0) a"),
-                    a_ID = $("#main-tabs ul li:eq(0) a").attr("href").replace("#", "");
-                this.tabs.openTabs[a_ID] = {open:1, url: a.attr("data-url"), title:a.attr("title")};
-                
-            }
+            // open all tabs on cookie except the current page.
+            for(var i in tabs)
+                if (i != currentID)
+                    t.tabs.open({url:tabs[i].url, title:tabs[i].title, ID:i});
         }
-        else
-        {
-            console.log("not null", tcook);
-        }
-            
+        
+        // activate the current page
         t.activate();
     },
     
     // main page tabs manager
     tabs:{
-        open: function(obj){
+        open: function(obj, fixed){
             
             var tabs = Admin.definitions.mainTabs,
-                tabTemplate = '<li id="tab-#{id}" role="presentation" class="active"><a href="#{id}">#{title}<span class="glyphicon glyphicon-remove"></span></a></li>',
+                tabTemplate = '<li id="tab-#{id}" role="presentation" class="active"><a href="#{id}">#{title}'+ (fixed ? '' : '<span class="glyphicon glyphicon-remove"></span>') + '</a></li>',
                 ID = obj.ID;
             
             if (this.openTabs[ID] == null)
@@ -60,8 +61,10 @@ var Admin = {
                 tabs.tabs("refresh");
                 $('a[href="#'+ID+'"]').click();
                 
-                this.openTabs[ID] = {open:1, url: obj.url, title:obj.title};
+                this.openTabs[ID] = {open:1, url: obj.url, ID:ID, title:obj.title};
                 this.load(obj.url, ID);
+                
+                this.refreshCookies();
             }
             else
             {
@@ -75,14 +78,17 @@ var Admin = {
             delete this.openTabs[ID];
             
             // select another tab on close
-            console.log(t.openTabs);
+            if( Object.keys(t.openTabs).length == 0 )
+                this.open({url:"index.html", title:"Home", ID:"home"}, true);
+            else
+                for ( i in t.openTabs)
+                    if( t.openTabs[i] != null ) {
+                        $('a[href="#'+i+'"]').click();
+                        Admin.registerToHistory(i, t.openTabs[i].url);
+                        break;
+                    }
             
-            for ( i in t.openTabs)
-                if( t.openTabs[i] != null ) {
-                    $('a[href="#'+i+'"]').click();
-                    Admin.registerToHistory(i, t.openTabs[i].url);
-                    break;
-                }
+            this.refreshCookies();
         },
         load: function( url, ID )
         {
@@ -135,6 +141,9 @@ var Admin = {
                     Admin.registerToHistory(ID, url);
                 }
             });
+        },
+        refreshCookies: function(){
+            Admin.cookies.write("@alaashopcookies", JSON.stringify(this.openTabs));
         },
         openTabs: {}
     },
@@ -231,26 +240,13 @@ var Admin = {
             var value = "; " + document.cookie,
                 parts = value.split("; " + key + "=");
             return parts.length == 2 ? parts.pop().split(";").shift() : null;
-        },
-        add: function( k ){
-            var cook = cookie.check("@alaashopcookies");
-            if(cook == null)
-                cookie.write("@alaashopcookies", k, 7);
-            else
-            {
-                var cue = cook.split("|");
-                if( cue[cue.length-1] != k ){
-                    cookie.write("@alaashopcookies", result+"|"+k, 7);
-                }
-            }
         }
     }
 }
 
-function detectEl( ID ){ return $(ID).length > 0 ? true : false; }
-
-window.addEventListener('popstate', function(event){
-	console.log(event);
-});
-
+// trigger the whole thing
 Admin.init();
+
+// Helper Functions
+function detectEl( ID ){ return $(ID).length > 0 ? true : false; }
+window.addEventListener('popstate', function(event){ console.log(event); });
