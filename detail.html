@@ -76,7 +76,8 @@
 				<div class="page-content" id="detail">
 					<div class="panel panel-default">
 						<div class="panel-heading">
-							<button type="button" class="btn btn-primary">something else</button>
+							<button onclick="javascript:Admin.page.save(this);" type="button" class="btn btn-primary">Save</button>
+							<button onclick="javascript:Admin.page.save(this, true );" type="button" class="btn btn-info">Save & Close</button>
 							<button type="button" class="btn btn-default pull-right" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
 								Screen options <span class="glyphicon glyphicon-th"></span>
 							</button>
@@ -103,7 +104,11 @@
 						</div>
 						</div>
 					</div>
+					
+					<div class="alert alert-danger hidden" role="alert" id="error-desc"></div>
+					
 					<div class='wrapper container-fluid'>
+						
 					  <div id='left-defaults' class='container col-xs-12 col-md-7'>
 						<div class="col-md-12">
 							<div class="panel panel-default">
@@ -137,7 +142,29 @@
 						<div class="col-md-12">
 							<div class="panel panel-default">
 								<div class="panel-heading handle">Panel heading without title 2</div>
-								<div class="panel-body">Basic panel example</div>
+								<div class="panel-body">
+									
+									<form id="form1" method="POST" action="data/submit.php">
+										<div class="form-group">
+										  <label for="exampleInputName">Name</label>
+										  <input name="name" type="text" class="form-control" id="exampleInputName" placeholder="Product name">
+										</div>
+										<div class="form-group">
+										  <label for="exampleInputTags">Tags</label>
+										  <input name="tags" type="text" class="form-control" id="exampleInputTagds" placeholder="Comma separated">
+										</div>
+										<div class="form-group">
+										  <label for="exampleInputCategories">Categories</label>
+										  <input name="categories" type="text" class="form-control" id="exampleInputCategories" placeholder="Categories">
+										</div>
+										<div class="checkbox">
+										  <label>
+											<input name="check" type="checkbox"> Check this to get an error
+										  </label>
+										</div>
+									</form>
+									
+								</div>
 							</div>
 						</div>
 						<div class="col-md-12">
@@ -157,13 +184,63 @@
 						<div class="col-md-12">
 							<div class="panel panel-default">
 								<div class="panel-heading handle">Panel heading without title 5</div>
-								<div class="panel-body">Basic panel example</div>
+								<div class="panel-body">
+									
+									<form id="form2" method="POST" action="data/submit.php">
+										<div class="form-group">
+										  <label for="exampleInputTitle">Title</label>
+										  <input name="title" type="text" class="form-control" id="exampleInputTitle" placeholder="Product title">
+										</div>
+										<div class="form-group">
+										  <label for="exampleInputDesc">Description</label>
+										  <textarea name="desc" class="form-control" id="exampleInputDesc" rows="3"></textarea>
+										</div>
+										
+										<div class="radio">
+											<label>
+											  <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+											  Option one is this and that&mdash;be sure to include why it's great
+											</label>
+										  </div>
+										  <div class="radio">
+											<label>
+											  <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+											  Option two can be something else and selecting it will deselect option one
+											</label>
+										  </div>
+										  <div class="radio">
+											<label>
+											  <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3">
+											  Option three is disabled
+											</label>
+										  </div>
+									  </form>
+									
+								</div>
 							</div>
 						</div>
 						<div class="col-md-12">
 							<div class="panel panel-default">
 								<div class="panel-heading handle">Panel heading without title 6</div>
-								<div class="panel-body">Basic panel example</div>
+								<div class="panel-body">
+									
+									<form id="form3" method="POST" action="data/submit.php">
+										<div class="form-group">
+										  <label for="exampleInputID">ID</label>
+										  <input name="id" type="text" class="form-control" id="exampleInputID" placeholder="Product ID">
+										</div>
+										<div class="input-group">
+											<span class="input-group-addon" id="basic-addon2">Date range: </span>
+											<input name="date" type="text" class="form-control date-picker" itemprop="range" value="2016-03-01" aria-describedby="basic-addon2">
+										</div>
+										<div class="checkbox">
+										  <label>
+											<input name="check" type="checkbox"> Check this to get an error
+										  </label>
+										</div>
+									</form>
+									
+								</div>
 							</div>
 						</div>
 					  </div>

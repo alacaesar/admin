@@ -29,6 +29,15 @@
 	<link rel="stylesheet" href="dependencies/datatables/datatables.min.css">
 	<script type="text/javascript" src="dependencies/datatables/datatables.min.js"></script>
 	
+	<!-- data tables extra -->
+	<script type="text/javascript" src="dependencies/datatables/extras/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="dependencies/datatables/extras/dataTables.select.js"></script>
+    <script type="text/javascript" src="dependencies/datatables/extras/dataTables.responsive.js"></script>
+	<script type="text/javascript" src='dependencies/datatables/extras/dataTables.treeGrid.js'></script>
+	<link rel="stylesheet" href="dependencies/datatables/extras/jquery.dataTables.css">
+    <link rel="stylesheet" href="dependencies/datatables/extras/select.dataTables.css">
+    <link rel="stylesheet" href="dependencies/datatables/extras/responsive.dataTables.css">
+	
 	<!-- AA custom plugins -->
 	<script type="text/javascript" src="dependencies/alaa/multiselect.js"></script>
 	
@@ -116,11 +125,127 @@
 								</tr>
 							</thead>
 						</table>
-						<noscript dir="exampleFX">{"ajax": 'data/sample.json'}</noscript>
+						<noscript dir="exampleFX">
+							{
+								'select': {
+									'style': 'os',
+									'selector': 'td:nth-child(2)'
+								},
+								'columns': [
+											{
+												title: '',
+												target: 0,
+												className: 'treegrid-control',
+												data: function (item) {
+													if (item.children) {
+														return '<span>+<\/span>';
+													}
+													return '';
+												}
+											},
+											{
+												title: '',
+												target: 1,
+												data: function (item) {
+													return item.Chk;
+												}
+											},
+											{
+												title: 'Name',
+												target: 1,
+												data: function (item) {
+													return item.name;
+												}
+											},
+											{
+												title: 'Position',
+												target: 2,
+												data: function (item) {
+													return item.position;
+												}
+											},
+											{
+												title: 'Office',
+												target: 3,
+												data: function (item) {
+													return item.office;
+												}
+											},
+											{
+												title: 'Extn.',
+												target: 4,
+												data: function (item) {
+													return item.extn;
+												}
+											},
+											{
+												title: 'Start date',
+												target: 5,
+												data: function (item) {
+													return item.start;
+												}
+											},
+											{
+												title: 'Salary',
+												target: 6,
+												data: function (item) {
+													return item.salary;
+												}
+											},
+											{
+												title: '',
+												target: 1,
+												data: function (item) {
+													return item.Resp;
+												}
+											},
+										],
+								"processing": true,
+								"serverSide": true,
+								'ajax': {'url' : 'data/data.php',
+										'type': 'POST'},
+								'treeGrid': {
+									'left': 10,
+									'expandIcon': '< span> + <\/span>',
+									'collapseIcon': '< span> - <\/span>'
+								},
+				
+								responsive: {
+									details: {
+										type: 'column',
+										target: -1
+									}
+								},
+								columnDefs: [{
+									orderable: true,
+									className: 'select-checkbox',
+									targets: 1
+								},
+								{
+									orderable: true,
+									className: 'control',
+									targets: -1
+								}],
+								select: {
+									style: 'os',
+									selector: 'td:nth-child(2)'
+								},
+								order: [[1, 'asc']]
+				
+							}
+						</noscript>
 						<script>
 							function exampleFX(){
-								$('#example tbody').on( 'click', 'tr', function (){
-									$(this).toggleClass('selected');
+								$('h4').on('click', function () {
+									var h4 = $(this);
+									if (h4.hasClass('show')) {
+										h4.removeClass('show').addClass('showed').html('-hide code');
+										h4.next().removeClass('hide');
+									}
+									else {
+										h4.removeClass('showed').addClass('show').html('+show code');
+										h4.next().addClass('hide');
+									}
 								});
 							}
 						</script>

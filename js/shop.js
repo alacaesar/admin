@@ -15,12 +15,12 @@ var Admin = {
         {
             var a = $("#main-tabs ul li:eq(0) a"),
                 currentID = $("#main-tabs ul li:eq(0) a").attr("href").replace("#", "");
-            this.tabs.openTabs[currentID] = {open:1, url: a.attr("data-url"), ID:currentID, title:a.attr("title")};
+            this.tabs.registerTab({url: a.attr("data-url"), ID:currentID, title:a.attr("title")});
             
             var mainTabs = $( "#main-tabs" ).tabs({classes: {"ui-tabs-active": "active"}});
             mainTabs.find( ".ui-tabs-nav" ).sortable({
                 axis: "x",
-                stop: function() { mainTabs.tabs( "refresh" ); }
+                stop: function() { mainTabs.tabs( "refresh" ); Admin.tabs.refreshOrder(); }
             });
             
             mainTabs.on( "click", "span.glyphicon-remove", function(){ t.tabs.close( this ); });
@@ -47,7 +47,8 @@ var Admin = {
     tabs:{
         open: function(obj, fixed){
             
-            var tabs = Admin.definitions.mainTabs,
+            var _tbs = this,
+                tabs = Admin.definitions.mainTabs,
                 tabTemplate = '<li id="tab-#{id}" role="presentation" class="active"><a href="#{id}">#{title}'+ (fixed ? '' : '<span class="glyphicon glyphicon-remove"></span>') + '</a></li>',
                 ID = obj.ID;
             
@@ -61,7 +62,7 @@ var Admin = {
                 tabs.tabs("refresh");
                 $('a[href="#'+ID+'"]').click();
                 
-                this.openTabs[ID] = {open:1, url: obj.url, ID:ID, title:obj.title};
+                this.registerTab({url: obj.url, ID:ID, title:obj.title});
                 this.load(obj.url, ID);
                 
                 this.refreshCookies();
@@ -70,6 +71,16 @@ var Admin = {
             {
                 $('a[href="#'+ID+'"]').click();
             }
+        },
+        registerTab: function(obj){
+            
+            console.log(obj.ID, this.index);
+            
+            var _this = this;
+                _this.openTabs[obj.ID] = {open:_this.index, url: obj.url, ID:obj.ID, title:obj.title};
+                _this.index++;
+                
+                
         },
         close: function(obj){
             var ID = $( obj ).closest( "li" ).remove().attr( "aria-controls" ), t = this;
@@ -145,6 +156,15 @@ var Admin = {
         refreshCookies: function(){
             Admin.cookies.write("@alaashopcookies", JSON.stringify(this.openTabs));
         },
+        refreshOrder: function(){
+            $("#main-tabs > ul > .ui-tabs-tab").each(function(index){
+                var id = $("a", this).attr("href").replace("#", "");
+                
+                console.log(id, index);
+                
+            });
+        },
+        index: 0,
         openTabs: {}
     },
     activate: function( ID ){
@@ -241,6 +261,60 @@ var Admin = {
                 parts = value.split("; " + key + "=");
             return parts.length == 2 ? parts.pop().split(";").shift() : null;
         }
+    },
+    page:{
+        save: function(obj, closeAfterSave){
+        
+            var p = this,
+                page = $(obj).parents(".page-content");
+            
+            p.forms = $("form", page).length;
+            p.success = 0;
+            $("#error-desc").html("<b>Oops! some problem occured:<b><br>").addClass("hidden");
+            
+            $("form", page).each(function(){
+                
+                console.log( $(this).attr("id"), $(this).serialize() );
+                
+                $.ajax({
+                    data: $(this).serialize() + "&formID="+$(this).attr("id"),
+                    type: $(this).attr('method'),
+                    url: $(this).attr('action'),
+                    success: function(response){
+                        
+                        p.response( JSON.parse( response ) );
+                        
+                    }
+                });                
+            });
+        },
+        response: function( response ){
+            var p = this;
+            
+            if (response.result == "OK")
+            {
+                $("#"+response.id+" .has-error").removeClass("has-error");
+                p.success++;
+            }
+            else
+            {
+                $("#error-desc").append("<b>"+response.id+"</b><br>").removeClass("hidden");
+                
+                for( item in response.data )
+                {
+                    $("#"+response.id+" input[name="+item+"]").parent("div").addClass("has-error");
+                    $("#error-desc").append( "- " + response.data[item] + "<br>" );
+                }
+            }
+            
+            if ( p.success == p.forms ) p.refresh();
+            
+        },
+        refresh: function(){
+            console.log("refresh page");
+        },
+        forms: 0,
+        success: 0
     }
 }
 
