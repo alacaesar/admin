@@ -254,7 +254,7 @@ var Admin = {
             var _days = days || 7;
             var d = new Date();
                 d.setTime(d.getTime() + (_days*24*60*60*1000));
-            document.cookie = key + "=" + value + "; expired=" + d.toGMTString();
+            document.cookie = key + "=" + value + ";   expired=" + d.toGMTString();
         },
         check: function(key){
             var value = "; " + document.cookie,
@@ -273,9 +273,6 @@ var Admin = {
             $("#error-desc").html("<b>Oops! some problem occured:<b><br>").addClass("hidden");
             
             $("form", page).each(function(){
-                
-                console.log( $(this).attr("id"), $(this).serialize() );
-                
                 $.ajax({
                     data: $(this).serialize() + "&formID="+$(this).attr("id"),
                     type: $(this).attr('method'),

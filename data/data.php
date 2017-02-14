@@ -1,18 +1,19 @@
 <?php
 
     $start = $_REQUEST['start'];
+    $draw = $_REQUEST['draw'];
 
 ?>
 
 {
-    "draw": , "recordsTotal": 26, "recordsFiltered": 26 ,
+    "draw": <?php echo $draw; ?>, "recordsTotal": 26, "recordsFiltered": 26 ,
     "data":[
     
         <?php if( $start == "0") : ?>
         
         {
             "Chk": "",
-            "name": "Mehmet GŸrle",
+            "name": "Mehmet GÃ¼rle",
             "position": "Senior Javascript Developer",
             "office": "Edinburgh",
             "extn": "6224",
