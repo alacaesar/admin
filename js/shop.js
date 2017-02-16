@@ -237,6 +237,35 @@ var Admin = {
             $(_ID+" .multiselect").each(function(){
                 $(this).Multiselect();
             });
+        },
+        // activate forms and detect input changes
+        forms: function( ID ){
+            var _ID = ID || "";
+            $(_ID + " form").each(function(index){
+                $(this).attr("id", _ID.substring(1)+"_frm"+index);
+                $("input", this).change(function(){
+                    $(this).parents("form").addClass("changed");
+                    $(_ID + " form[data-toggle=main]").addClass("changed");
+                });
+            });
+        },
+        panel: function( ID ){
+            var _ID = ID || "";
+            
+            $(_ID + " .panel-body").each(function(index){
+                
+                var n = "w"+index;
+                $(this).attr("id", n);
+                
+                if ( $(this).hasClass("widget") ) {
+                    $(this).load($(this).attr("data-source"), function(data){
+                    
+                        Admin.activate("#"+n);
+                    
+                    });
+                }
+                
+            });
         }
     },
     
@@ -264,54 +293,95 @@ var Admin = {
     },
     page:{
         save: function(obj, closeAfterSave){
-        
             var p = this,
                 page = $(obj).parents(".page-content");
-            
-            p.forms = $("form", page).length;
-            p.success = 0;
-            $("#error-desc").html("<b>Oops! some problem occured:<b><br>").addClass("hidden");
-            
-            $("form", page).each(function(){
-                $.ajax({
-                    data: $(this).serialize() + "&formID="+$(this).attr("id"),
-                    type: $(this).attr('method'),
-                    url: $(this).attr('action'),
-                    success: function(response){
+                
+            if ( p.submitting == false ) {
+                
+                p.submitting = true;
+                
+                p.forms = $("form.changed", page).length;
+                p.success = 0;
+                $("#error-desc").html("<b>Oops! some problem occured:<b><br>").addClass("hidden");
+                
+                $("form.changed", page).each(function(){
+                    
+                    $(this).parents(".panel").removeClass("panel-danger panel-success").addClass("panel-warning");
+                    
+                    var attributes = {};
+                        $($(this)[0].attributes).each(function(){
+                            attributes[this.nodeName] = this.nodeValue;
+                        });
                         
-                        p.response( JSON.parse( response ) );
-                        
-                    }
-                });                
-            });
+                    $.ajax({
+                        data: $(this).serialize(),
+                        type: $(this).attr('method'),
+                        url: $(this).attr('action'),
+                        success: function(response){
+                            
+                            p.response( JSON.parse( response ), attributes );
+                            
+                        }
+                    });
+                });
+            }
         },
-        response: function( response ){
-            var p = this;
-            
+        response: function( response, attributes ){
+            var p = this,
+                _id = attributes.id;
+                
             if (response.result == "OK")
             {
-                $("#"+response.id+" .has-error").removeClass("has-error");
+                $("#"+_id).parents(".panel").removeClass("panel-warning").addClass("panel-success");
+                $("#"+_id+" .has-error").removeClass("has-error");
+                
+                if ( attributes["data-toggle"] == "main") {
+                    p.redirect = response.redirect;
+                }
+                
                 p.success++;
             }
             else
             {
-                $("#error-desc").append("<b>"+response.id+"</b><br>").removeClass("hidden");
+                $("#"+_id).parents(".panel").removeClass("panel-warning").addClass("panel-danger");
+                $("#error-desc").append("<b>"+_id+"</b><br>").removeClass("hidden");
                 
                 for( item in response.data )
                 {
-                    $("#"+response.id+" input[name="+item+"]").parent("div").addClass("has-error");
+                    $("#"+_id+" input[name="+item+"]").parent("div").addClass("has-error");
                     $("#error-desc").append( "- " + response.data[item] + "<br>" );
                 }
+                
+                p.submitting = false;
             }
             
-            if ( p.success == p.forms ) p.refresh();
+            if ( p.success == p.forms ) p.refresh( p.redirect );
             
         },
-        refresh: function(){
-            console.log("refresh page");
+        refresh: function( url ){
+            var p = this;
+                p.submitting = false;
+            console.log("refresh page to ", url );
+            
+            $(".panel").each(function(){
+                
+                var n = $(".panel-body", this).attr("id"); 
+                
+                $(this).removeClass("panel-success").addClass("panel-info");
+                $(".panel-body", this).load( $(".panel-body", this).attr("data-source"), function(){
+                
+                    Admin.activate("#"+n);
+                
+                } );
+                
+            });
+            
+            
         },
         forms: 0,
-        success: 0
+        success: 0,
+        redirect: "",
+        submitting: false
     }
 }
 

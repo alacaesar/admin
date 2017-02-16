@@ -109,7 +109,7 @@
 					
 					<div class='wrapper container-fluid'>
 						
-					  <div id='left-defaults' class='container col-xs-12 col-md-7'>
+					  <div id='left-defaults' class='container col-xs-12 col-md-8'>
 						
 						<div class="col-md-12">
 							<div class="panel panel-default">
@@ -124,18 +124,9 @@
 										</ul>
 									</div>
 								</div>
-								<div class="panel-body">
-									<p>Select single date and a date range from here</p>
-									<p>Quisque eu urna vel <a title="Grid" data-id="grid" href="grid.html">grid link</a> enim <a title="Detail" data-id="detail" href="detail.html">grid link 2</a> commodo pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a, lacus. Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra justo vitae neque.</p>
-									<div class="input-group">
-										<span class="input-group-addon" id="basic-addon1">Single date: </span>
-										<input class="form-control date-picker" itemprop="single" value="2016-03-01" aria-describedby="basic-addon1">
-									</div>
-									<br>
-									<div class="input-group">
-										<span class="input-group-addon" id="basic-addon2">Date range: </span>
-										<input class="form-control date-picker" itemprop="range" value="2016-03-01" aria-describedby="basic-addon2">
-									</div>
+								<div class="panel-body" data-source="data/view/view04.html">
+									
+									<h1>This is fixed component</h1>
 									
 								</div>
 							</div>
@@ -143,31 +134,15 @@
 						<div class="col-md-12">
 							<div class="panel panel-default">
 								<div class="panel-heading handle">Panel heading without title 2</div>
-								<div class="panel-body">
+								<div class="panel-body widget" data-source="data/view/view01.html">
 									
-									<form method="POST" action="data/submit.php" data-toggle="main">
-										<div class="form-group">
-										  <label for="exampleInputName">Name</label>
-										  <input name="name" type="text" class="form-control" id="exampleInputName" placeholder="Product name">
-										</div>
-										<div class="form-group">
-										  <label for="exampleInputTags">Tags</label>
-										  <input name="tags" type="text" class="form-control" id="exampleInputTagds" placeholder="Comma separated">
-										</div>
-										<div class="form-group">
-										  <label for="exampleInputCategories">Categories</label>
-										  <input name="categories" type="text" class="form-control" id="exampleInputCategories" placeholder="Categories">
-										</div>
-										<div class="checkbox">
-										  <label>
-											<input name="check" type="checkbox"> Check this to get an error
-										  </label>
-										</div>
-									</form>
+									Loading...
 									
 								</div>
 							</div>
 						</div>
+						
+						
 						<div class="col-md-12">
 							<div class="panel panel-default">
 								<div class="panel-heading handle">Panel heading without title 3</div>
@@ -175,49 +150,24 @@
 							</div>
 						</div>
 					  </div>
-					  <div id='right-defaults' class='container col-xs-12 col-md-5'>
+					  
+					  <div id='right-defaults' class='container col-xs-12 col-md-4'>
 						<div class="col-md-12">
 							<div class="panel panel-default">
 								<div class="panel-heading handle">Panel heading without title 4</div>
-								<div class="panel-body">
-									<div class="loadlater" data-source="single-view.html">Loading</div>
+								<div class="panel-body widget" data-source="data/view/view01.html">
+									
+									Loading...
+								
 								</div>
 							</div>
 						</div>
 						<div class="col-md-12">
 							<div class="panel panel-default">
 								<div class="panel-heading handle">Panel heading without title 5</div>
-								<div class="panel-body">
+								<div class="panel-body widget" data-source="data/view/view02.html">
 									
-									<form method="POST" action="data/submit.php">
-										<div class="form-group">
-										  <label for="exampleInputTitle">Title</label>
-										  <input name="title" type="text" class="form-control" id="exampleInputTitle" placeholder="Product title">
-										</div>
-										<div class="form-group">
-										  <label for="exampleInputDesc">Description</label>
-										  <textarea name="desc" class="form-control" id="exampleInputDesc" rows="3"></textarea>
-										</div>
-										
-										<div class="radio">
-											<label>
-											  <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-											  Option one is this and that&mdash;be sure to include why it's great
-											</label>
-										  </div>
-										  <div class="radio">
-											<label>
-											  <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-											  Option two can be something else and selecting it will deselect option one
-											</label>
-										  </div>
-										  <div class="radio">
-											<label>
-											  <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3">
-											  Option three is disabled
-											</label>
-										  </div>
-									  </form>
+									Loading...
 									
 								</div>
 							</div>
@@ -225,23 +175,9 @@
 						<div class="col-md-12">
 							<div class="panel panel-default">
 								<div class="panel-heading handle">Panel heading without title 6</div>
-								<div class="panel-body">
+								<div class="panel-body widget" data-source="data/view/view03.html">
 									
-									<form method="POST" action="data/submit.php">
-										<div class="form-group">
-										  <label for="exampleInputID">ID</label>
-										  <input name="id" type="text" class="form-control" id="exampleInputID" placeholder="Product ID">
-										</div>
-										<div class="input-group">
-											<span class="input-group-addon" id="basic-addon2">Date range: </span>
-											<input name="date" type="text" class="form-control date-picker" itemprop="range" value="2016-03-01" aria-describedby="basic-addon2">
-										</div>
-										<div class="checkbox">
-										  <label>
-											<input name="check" type="checkbox"> Check this to get an error
-										  </label>
-										</div>
-									</form>
+									Loading...
 									
 								</div>
 							</div>

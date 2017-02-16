@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	
+	<!--defaults-->
+	<link rel="stylesheet" href="styles/css/style.css">
+	<script type="text/javascript" src="js/jquery-2.2.1.min.js"></script>
+	
+	<!--jquery ui-->
+	<link rel="stylesheet" href="dependencies/jqueryui/jquery-ui.min.css">
+	<script type="text/javascript" src="dependencies/jqueryui/jquery-ui.min.js"></script>
+	
+	<!--bootstrap-->
+	<link rel="stylesheet" href="dependencies/bootstrap/css/bootstrap.min.css">
+	<script type="text/javascript" src="dependencies/bootstrap/js/bootstrap.min.js"></script>
+	
+	<!--dragula for details page drag and drop-->
+	<link rel="stylesheet" href="dependencies/dragula/dragula.min.css">
+	<script type="text/javascript" src="dependencies/dragula/dragula.min.js"></script>
+	
+	<!-- date range picker + moment -->
+	<link rel="stylesheet" href="dependencies/daterangepicker/daterangepicker.min.css">
+	<script type="text/javascript" src="dependencies/daterangepicker/moment.min.js"></script>
+	<script type="text/javascript" src="dependencies/daterangepicker/jquery.daterangepicker.min.js"></script>
+	
+	<!-- data tables -->
+	<link rel="stylesheet" href="dependencies/datatables/datatables.min.css">
+	<script type="text/javascript" src="dependencies/datatables/datatables.min.js"></script>
+	
+	<!-- AA custom plugins -->
+	<script type="text/javascript" src="dependencies/alaa/multiselect.js"></script>
+	
+    <title>Shop</title>
+</head>
+<body id="body">
+	
+	<div class="wrapper container-fluid">
+		<!-- top panel -->
+		<div class="top-panel col-sm-12"><nav class="navbar navbar-default"><a class="navbar-brand" href="#">Brand</a></nav></div>
+		
+		<!-- left panel -->
+		<div class="left-panel col-sm-1">
+			<div class="btn-group-vertical" role="group" aria-label="...">
+				<button type="button" class="btn btn-default"><a href="index.html" title="Home" data-id="home"><span class="glyphicon glyphicon-home"></span></a></button>
+				<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-folder-close"></span></button>
+				
+				<div class="btn-group" role="group">
+					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-shopping-cart"></span><span class="caret"></span></button>
+					<ul class="dropdown-menu">
+						<li><a href="#">Sales</a></li>
+						<li><a href="#">Orders</a></li>
+						<li><a href="#">Shipment Planning</a></li>
+						<li><a href="#">Invoices</a></li>
+					</ul>
+				</div>
+				
+				<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-inbox"></span></button>
+				<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-stats"></span></button>
+				<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-user"></span></button>
+				<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-phone"></span></button>
+			</div>	
+		</div>
+		<!-- end of left panel -->
+		
+		<!-- content panel -->
+		<div class="right-panel col-sm-11">
+			
+			<!-- page tabs -->
+			<div id="main-tabs">
+				<ul class="nav nav-tabs">
+					<li role="presentation" class="active"><a data-url="dynamic-grid.html" title="Dynamic Grid" href="#dynamic-grid">Dynamic Grid <span class="glyphicon glyphicon-remove"></span></a></li>
+				</ul>
+				
+				<div class="page-content" id="dynamic-grid">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<button onclick="javascript:Admin.page.save(this);" type="button" class="btn btn-primary">Search</button>
+							<button type="button" class="btn btn-default pull-right" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+								Screen options <span class="glyphicon glyphicon-th"></span>
+							</button>
+						</div>
+						<div id="collapseExample" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+						<div class="panel-body widget" data-source="data/view/view01.html">
+							
+							Panel Loading...
+							
+						</div>
+						</div>
+					</div>
+					
+					<div class="alert alert-danger hidden" role="alert" id="error-desc"></div>
+					
+					<div class='wrapper container-fluid'>
+						
+					  <div class="col-md-12">
+							<div class="panel panel-default">
+								<div class="panel-heading handle">Panel heading without title 1
+									<div class="dropdown pull-right">
+										<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+											<span class="glyphicon glyphicon-option-vertical"></span>
+										</button>
+										<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+											<li><a href="#">Collapse</a></li>
+											<li><a href="#">Hide</a></li>
+										</ul>
+									</div>
+								</div>
+								<div class="panel-body" data-source="data/view/view04.html">
+									
+									<h1>This is fixed component</h1>
+									
+								</div>
+							</div>
+						</div>
+						
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	
+<script type="text/javascript" src="js/shop.js"></script>
+</body>
+</html>
