@@ -1,3 +1,4 @@
+<?php sleep( rand(0,3) ); ?>
 <h2>I was updated</h2>
 
 <!-- start of table block -->

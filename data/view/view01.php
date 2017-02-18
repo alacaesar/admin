@@ -1,3 +1,4 @@
+<?php sleep( rand(0,3) ); ?>
 <form method="POST" action="data/submit.php">
 	<div class="form-group">
 		<label for="exampleInputName">Name</label>
