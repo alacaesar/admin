@@ -2,6 +2,7 @@
 
     $start = $_REQUEST['start'];
     $draw = $_REQUEST['draw'];
+    $short = $_REQUEST['freesearch'];
 
 ?>
 
@@ -13,7 +14,7 @@
         
         {
             "Chk": "",
-            "name": "Mehmet Gürle",
+            "name": "<?php if( $short == 1) : ?>Alaa<?php else : ?>Mehmet Gürle<?php endif; ?>",
             "position": "Senior Javascript Developer",
             "office": "Edinburgh",
             "extn": "6224",

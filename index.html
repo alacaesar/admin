@@ -70,7 +70,9 @@
 			<!-- page tabs -->
 			<div id="main-tabs">
 				<ul class="nav nav-tabs">
-					<li role="presentation" class="active"><a data-url="index.html" title="home" href="#home">Home</a></li>
+					<li role="presentation" class="active">
+						<a data-url="index.html" title="home" href="#home">Home</a>
+					</li>
 				</ul>
 				<div class="page-content" id="home">
 					welcome
@@ -81,6 +83,10 @@
 					<br />
 					<a href="async.html" title="Async" data-id="async">Open Async page</a>
 					<br />
+					<a href="orders.html" title="Orders" data-id="orders">Orders page</a>
+					<br />
+					<a href="dynamic-grid.html" title="Dynamic Grid" data-id="dynamicgrid">Dynamic Grid</a>
+					<br />
 					<br />
 					
 					
@@ -88,10 +94,10 @@
 					<div class="well well-sm multiselect">
 						<button type="button" class="btn-sm btn-info">something</button>
 						<button type="button" class="btn-sm btn-primary"><span class="badge">E</span> something else</button>
-						<button type="button" class="btn-sm btn-default pull-right toggle" data-toggle="modal" data-target="#myModal" data-source="data/sample.json" columns="Category Name|Items Qty">
+						<button type="button" class="btn-sm btn-default pull-right toggle" data-toggle="modal" data-target="#myModal1" data-source="data/sample.json" columns="Category Name|Items Qty">
 							<span class="glyphicon glyphicon-menu-hamburger"></span>
 						</button>
-						<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+						<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 							<div class="modal-dialog" role="document">
 								<div class="modal-content">
 									<div class="modal-header">

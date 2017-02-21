@@ -26,17 +26,8 @@
 	<script type="text/javascript" src="dependencies/daterangepicker/jquery.daterangepicker.min.js"></script>
 	
 	<!-- data tables -->
-	<!--<link rel="stylesheet" href="dependencies/datatables/datatables.min.css">
-	<script type="text/javascript" src="dependencies/datatables/datatables.min.js"></script> -->
-	
-	<!-- data tables extra -->
-	<script type="text/javascript" src="dependencies/datatables/extras/jquery.dataTables.js"></script>
-    <script type="text/javascript" src="dependencies/datatables/extras/dataTables.select.js"></script>
-    <script type="text/javascript" src="dependencies/datatables/extras/dataTables.responsive.js"></script>
-	<script type="text/javascript" src='dependencies/datatables/extras/dataTables.treeGrid.js'></script>
-	<link rel="stylesheet" href="dependencies/datatables/extras/jquery.dataTables.css">
-    <link rel="stylesheet" href="dependencies/datatables/extras/select.dataTables.css">
-    <link rel="stylesheet" href="dependencies/datatables/extras/responsive.dataTables.css">
+	<link rel="stylesheet" href="dependencies/datatables/datatables.min.css">
+	<script type="text/javascript" src="dependencies/datatables/datatables.min.js"></script>
 	
 	<!-- AA custom plugins -->
 	<script type="text/javascript" src="dependencies/alaa/multiselect.js"></script>
@@ -79,39 +70,108 @@
 			<!-- page tabs -->
 			<div id="main-tabs">
 				<ul class="nav nav-tabs">
-					<li role="presentation" class="active"><a data-url="grid.html" title="Grid" href="#grid">Grid <span class="glyphicon glyphicon-remove"></span></a></li>
+					<li role="presentation" class="active"><a data-url="orders.html" title="Orders" href="#orders">Orders <span class="glyphicon glyphicon-remove"></span></a></li>
 				</ul>
 				
-				<div class="page-content" id="grid">
+				<div class="page-content" id="orders" data-source="data/search-panel.php?int=1&select=1&range=1" controls="controledtable">
 					
-					<!-- page content -->
-					<div id="tabs">
-						<ul class="nav nav-tabs">
-							<li role="presentation" class="active"><a href="#tabs-1">Nunc tincidunt</a></li>
-							<li role="presentation"><a href="#tabs-2">Proin dolor</a></li>
-							<li role="presentation"><a href="#tabs-3">Aenean lacinia <span class="glyphicon glyphicon-trash"></span></a></li>
-							<li role="presentation" class="dropdown">
-								<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);" role="button" aria-haspopup="true" aria-expanded="false">More <span class="caret"></span></a>
-								<ul class="dropdown-menu">
-									<li role="presentation"><a href="#tabs-2">Proin dolor</a></li>
-									<li role="presentation"><a href="#tabs-1">Proin dolor</a></li>
-								</ul>
-							</li>
-						</ul>
-						<div id="tabs-1">
-							<p>1 Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante. Etiam aliquet massa et lorem. Mauris dapibus lacus auctor risus. Aenean tempor ullamcorper leo. Vivamus sed magna quis ligula eleifend adipiscing. Duis orci. Aliquam sodales tortor vitae ipsum. Aliquam nulla. Duis aliquam molestie erat. Ut et mauris vel pede varius sollicitudin. Sed ut dolor nec orci tincidunt interdum. Phasellus ipsum. Nunc tristique tempus lectus.</p>
-						</div>
-						<div id="tabs-2">
-							<p>2 Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
-						</div>
-						<div id="tabs-3">
-							<p>3 Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a, lacus.</p>
-							<p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra justo vitae neque. Praesent blandit adipiscing velit. Suspendisse potenti. Donec mattis, pede vel pharetra blandit, magna ligula faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque. Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum rutrum. Maecenas commodo. Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus hendrerit hendrerit.</p>
-						</div>
+					<div class="panel panel-default">
+						
+						<div class="panel-body norefresh">
+							<!-- multiselect -->
+							<div class="well well-sm multiselect">
+								<button type="button" class="btn-sm btn-info">Selection</button>
+								<button type="button" class="btn-sm btn-primary"><span class="badge">E</span> something else</button>
+								<button type="button" class="btn-sm btn-default pull-right toggle" data-toggle="modal" data-target="#myModal" data-source="data/menu.php" columns="Criteria|Type">
+									<span class="glyphicon glyphicon-menu-hamburger"></span>
+								</button>
+								<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+									<div class="modal-dialog" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+												<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+											</div>
+											<div class="modal-body">
+													...
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+												<button type="button" class="btn btn-primary save-and-close">Add</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- end of multiselect -->
+								
+						<form method="POST" action="data/submit.php">
+								
+							<div class="form-group">
+								<input name="freesearch" type="text" class="form-control" id="freesearchInput" placeholder="Type to search">
+							</div>
+							
+							<!-- search attributes -->
+							<div class="attributes">
+									
+								<div class="form-group hide">
+									<label for="addressInput" class="col-sm-2">Address</label>
+									<div class="col-sm-10">
+										<input name="adress" type="text" class="form-control" id="addressInput" placeholder="Type something">
+									</div>
+								</div>
+								
+								<div class="form-group hide">
+									<label for="priceInput" class="col-sm-2">Price</label>
+									<div class="col-sm-10">
+										<input name="price" type="text" class="form-control" id="priceInput" placeholder="Type something">
+									</div>
+								</div>
+								
+								<div class="form-group hide">
+									<label for="ordertypeInput" class="col-sm-2">Order type</label>
+									<div class="col-sm-10">
+										<input name="ordertype" type="text" class="form-control" id="ordertypeInput" placeholder="Type something">
+									</div>
+								</div>
+								
+								<div class="form-group hide">
+									<label for="statusInput" class="col-sm-2">Status</label>
+									<div class="col-sm-10">
+										<input name="status" type="text" class="form-control" id="statusInput" placeholder="Type something">
+									</div>
+								</div>
+										
+							</div>
+							<!-- end search attributes -->
+								
+							<button class="btn btn-default submitSearchForm">search</button>
+							
+						</form>
+						
 					</div>
-					<!-- end of page content -->
+				</div>
 					
-					<!-- start of table block -->
+					<div class='wrapper container-fluid'>
+						
+					  <div class="col-md-12">
+							<div class="panel panel-default">
+								<div class="panel-heading handle">Panel heading without title 1
+									<div class="dropdown pull-right">
+										<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+											<span class="glyphicon glyphicon-option-vertical"></span>
+										</button>
+										<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+											<li><a href="#">Collapse</a></li>
+											<li><a href="#">Hide</a></li>
+										</ul>
+									</div>
+								</div>
+								
+								<div class="panel-body" data-source="data/view/view04.php" id="controledtable">
+									
+									
+<!-- start of table block -->
 					<div class="data-table">
 						<table id="exampleWithSelect" class="table table-striped table-hover display nowrap" cellspacing="0" width="100%"></table>
 						<noscript dir="exampleFX">
@@ -191,8 +251,7 @@
 								"processing": true,
 								"serverSide": true,
 								'ajax': {'url' : 'data/data.php',
-										'type': 'POST',
-										'data': {'short':1}},
+										'type': 'POST'},
 								'treeGrid': {
 									'left': 10,
 									'expandIcon': '+',
@@ -240,6 +299,12 @@
 						</script>
 					</div>
 					<!-- end of table block -->
+									
+								</div>
+							</div>
+						</div>
+						
+					</div>
 					
 				</div>
 			</div>

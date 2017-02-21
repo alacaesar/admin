@@ -1,6 +1,8 @@
 
 // shop admin
 
+var table;
+
 var Admin = {
     definitions:{
         mainTabs: null,
@@ -52,12 +54,12 @@ var Admin = {
                                                     
                                                     t.registerToHistory(title, url);
                                             }});
-            /*
+            
             mainTabs.find( ".ui-tabs-nav" ).sortable({
                 axis: "x",
                 stop: function() { mainTabs.tabs( "refresh" ); Admin.tabs.refreshOrder(); }
             });
-            */
+            
             mainTabs.on( "click", "span.glyphicon-remove", function(){ t.tabs.close( this ); });
             
             t.definitions.mainTabs = mainTabs;
@@ -308,7 +310,8 @@ var Admin = {
             var _ID = ID || "";
             $(_ID+" .data-table").each(function(){
                 eval("var config = " + $('noscript', this).html());
-                $('table', this).DataTable( config );
+                
+                table = $('table', this).DataTable( config );
                 
                 if( $('noscript', this).attr("dir") != undefined)
                     eval($('noscript', this).attr("dir"))();
@@ -318,7 +321,25 @@ var Admin = {
         multiselect: function( ID ){
             var _ID = ID || "";
             $(_ID+" .multiselect").each(function(){
-                $(this).Multiselect();
+                $(this).Multiselect({}, function( data ){
+                    searchPageControls(_ID, data);
+                });
+            });
+        },
+        //search page
+        searchSubmitting: function( ID ){
+            var _ID = ID || "";
+            $(_ID+" .submitSearchForm").click(function( event ){
+                
+                event.preventDefault();
+                
+                var form = $(this).parents("form");
+                var url = table.ajax.url();
+                
+                    url = url.indexOf("?") > 0 ? url.substr(0, url.indexOf("?")) : url;
+                
+                table.ajax.url( url +"?"+$(form).serialize() ).load();
+                
             });
         },
         // activate forms and detect input changes
@@ -384,6 +405,11 @@ var Admin = {
                 p.submitting = true;
                 
                 p.forms = $("form.changed", page).length;
+                
+                if ( p.forms == 0) {
+                    p.submitting = false;
+                }
+                
                 p.success = 0;
                 $("#error-desc").html("<b>Oops! some problem occured:<b><br>").addClass("hidden");
                 
@@ -470,6 +496,28 @@ var Admin = {
 
 // trigger the whole thing
 Admin.init();
+
+
+function searchPageControls( ID, data ) {
+    
+    console.log(data);
+    
+    $(ID+" .norefresh .attributes .form-group").addClass("hide");
+    
+    for( line in data )
+    {
+        var item = $(ID+" .norefresh .attributes #"+ data[line][1]).parents(".form-group");
+        
+        console.log((ID+" .norefresh .attributes "+ data[line][1]));
+        
+        item.removeClass("hide");
+    }
+    
+    //$(ID+" .norefresh .attributes")
+}
+
+
+
 
 // Helper Functions
 function detectEl( ID ){ return $(ID).length > 0 ? true : false; }

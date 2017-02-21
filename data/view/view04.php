@@ -1,4 +1,20 @@
-<?php sleep( rand(0,3) ); ?>
+<?php
+
+	$short = $_REQUEST['short'];
+	
+	$arr = $_GET;
+	
+	$data = '{';
+	
+	foreach( $arr as $key=>$val)
+	{
+		$data .= '"' . $key . '":' . '"' . $val . '",';
+	}
+	
+	$data = substr($data, 0, -1);
+	$data .= '}';
+
+sleep( rand(0,3) ); ?>
 <h2>I was updated</h2>
 
 <!-- start of table block -->
@@ -81,7 +97,8 @@
 								"processing": true,
 								"serverSide": true,
 								'ajax': {'url' : 'data/data.php',
-										'type': 'POST'},
+										'type': 'POST',
+										'data': <?php echo $data; ?> },
 								'treeGrid': {
 									'left': 10,
 									'expandIcon': '+',
